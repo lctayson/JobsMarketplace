@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/JobsMarketplace.API/jobsmarketplace.db-shm
+/JobsMarketplace.API/jobsmarketplace.db-wal
