@@ -1,0 +1,338 @@
+{
+  "info": {
+    "_postman_id": "577cc2ed-4723-46c9-aa86-132964fcbce8",
+    "name": "Jobs Marketplace API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10164062"
+  },
+  "item": [
+    {
+      "name": "Get Job By Id",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Customer Search",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7238/api/customers/dummy?page=2&pageSize=2",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "customers",
+            "dummy"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "pageSize",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contractor Search",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7238/api/customers/dummy?page=2&pageSize=2",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "customers",
+            "dummy"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "pageSize",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contractor By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7238/api/customers/dummy?page=2&pageSize=2",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "customers",
+            "dummy"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "pageSize",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contractor Delete By Id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7238/api/contractors/10",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "contractors",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Job - Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"startDate\": \"2026-08-01T09:00:00Z\",\r\n  \"dueDate\": \"202-08-15T17:00:00Z\",\r\n  \"budget\": 5000.00,\r\n  \"description\": \"Flood Control Project - Ligas Malolos City\",\r\n  \"acceptedBy\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/jobs",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "jobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Job - Search Available Jobs",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Job - Search By Id",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Job - Update",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"startDate\": \"2026-08-01T09:00:00Z\",\r\n  \"dueDate\": \"202-08-15T17:00:00Z\",\r\n  \"budget\": 5000.00,\r\n  \"description\": \"Flood Control Project - Ligas Malolos City\",\r\n  \"acceptedBy\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/jobs",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "jobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Job - Delete",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "JobOffer - Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"jobId\": 1,\r\n  \"contractorId\": 42,\r\n  \"amount\": 1500.00,\r\n  \"message\": \"I have extensive experience with this type of work and can start immediately.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/joboffers",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "joboffers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "JobOffer - Delete By Id",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"jobId\": 1,\r\n  \"contractorId\": 42,\r\n  \"amount\": 1500.00,\r\n  \"message\": \"I have extensive experience with this type of work and can start immediately.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/joboffers",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "joboffers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "JobOffer - Get By Id",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"jobId\": 1,\r\n  \"contractorId\": 42,\r\n  \"amount\": 1500.00,\r\n  \"message\": \"I have extensive experience with this type of work and can start immediately.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/joboffers",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "joboffers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "JobOffer - Accept",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"startDate\": \"2026-08-01T09:00:00Z\",\r\n  \"dueDate\": \"202-08-15T17:00:00Z\",\r\n  \"budget\": 5000.00,\r\n  \"description\": \"Flood Control Project - Ligas Malolos City\",\r\n  \"acceptedBy\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://localhost:7238/api/joboffers/1/accept",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7238",
+          "path": [
+            "api",
+            "joboffers",
+            "1",
+            "accept"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}
