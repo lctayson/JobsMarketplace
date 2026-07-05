@@ -1,7 +1,6 @@
 ﻿using JobsMarketplace.API.Data;
 using JobsMarketplace.API.Dtos;
 using JobsMarketplace.API.Entities;
-using JobsMarketplace.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobsMarketplace.API.Services;

@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
-using JobsMarketplace.API.Data;
+using JobsMarketplace.API.Constants;
 using JobsMarketplace.API.Dtos;
 using JobsMarketplace.API.Entities;
+using JobsMarketplace.API.Repositories;
 using JobsMarketplace.API.Services;
-using JobsMarketplace.API.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
 
@@ -12,15 +11,15 @@ namespace JobsMarketplace.API.UnitTests;
 
 public class JobServiceTests
 {
-    private readonly Mock<IAppDbContext> _mockContext;
+    private readonly Mock<IJobRepository> _mockJobRepository;
     private readonly Mock<ICacheService> _mockCache;
     private readonly JobService _service;
 
     public JobServiceTests()
     {
-        _mockContext = new Mock<IAppDbContext>();
+        _mockJobRepository = new Mock<IJobRepository>();
         _mockCache = new Mock<ICacheService>();
-        _service = new JobService(_mockContext.Object, _mockCache.Object);
+        _service = new JobService(_mockJobRepository.Object, _mockCache.Object);
     }
 
     [Fact]
@@ -28,16 +27,14 @@ public class JobServiceTests
     {
         // Arrange
         var dto = new JobDto { Description = "Test Job", Budget = 100 };
-        var mockSet = new Mock<DbSet<Job>>();
-        _mockContext.Setup(c => c.Jobs).Returns(mockSet.Object);
 
         // Act
         var result = await _service.Create(dto);
 
         // Assert
         result.Description.Should().Be(dto.Description);
-        _mockContext.Verify(c => c.Jobs.Add(It.IsAny<Job>()), Times.Once);
-        _mockContext.Verify(c => c.SaveChangesAsync(default), Times.Once);
+        _mockJobRepository.Verify(r => r.AddAsync(It.IsAny<Job>()), Times.Once);
+        _mockJobRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
     }
 
     [Fact]
@@ -45,7 +42,7 @@ public class JobServiceTests
     {
         // Arrange
         int jobId = 99;
-        _mockContext.Setup(c => c.Jobs.FindAsync(jobId)).ReturnsAsync((Job?)null);
+        _mockJobRepository.Setup(r => r.GetByIdAsync(jobId)).ReturnsAsync((Job?)null);
 
         // Act
         var result = await _service.DeleteById(jobId);
@@ -62,15 +59,16 @@ public class JobServiceTests
         int jobId = 1;
         var existingJob = new Job(DateTime.Now, DateTime.Now.AddDays(1), 100, "Old Job");
 
-        _mockContext.Setup(c => c.Jobs.FindAsync(jobId)).ReturnsAsync(existingJob);
-        _mockContext.Setup(c => c.Jobs.Remove(existingJob));
+        _mockJobRepository.Setup(r => r.GetByIdAsync(jobId)).ReturnsAsync(existingJob);
 
         // Act
         var result = await _service.DeleteById(jobId);
 
         // Assert
         result.Should().BeTrue();
-        _mockCache.Verify(c => c.Remove($"job_{jobId}"), Times.Once);
-        _mockContext.Verify(c => c.SaveChangesAsync(default), Times.Once);
+
+        _mockCache.Verify(c => c.Remove(CacheKeys.Jobs.ById(jobId)), Times.Once);
+        _mockJobRepository.Verify(r => r.Remove(existingJob), Times.Once);
+        _mockJobRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
     }
 }

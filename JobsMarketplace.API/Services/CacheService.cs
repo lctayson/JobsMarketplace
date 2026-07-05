@@ -1,5 +1,4 @@
-﻿using JobsMarketplace.API.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace JobsMarketplace.API.Services;
 

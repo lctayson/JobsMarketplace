@@ -1,6 +1,6 @@
 ﻿using JobsMarketplace.API.Dtos;
 
-namespace JobsMarketplace.API.Services.Interfaces;
+namespace JobsMarketplace.API.Services;
 
 public interface ICustomerService
 {

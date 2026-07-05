@@ -1,5 +1,5 @@
 ﻿using JobsMarketplace.API.Dtos;
-using JobsMarketplace.API.Services.Interfaces;
+using JobsMarketplace.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobsMarketplace.API.Controllers;

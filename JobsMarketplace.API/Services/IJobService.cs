@@ -1,7 +1,7 @@
 ﻿using JobsMarketplace.API.Dtos;
 using JobsMarketplace.API.Entities;
 
-namespace JobsMarketplace.API.Services.Interfaces;
+namespace JobsMarketplace.API.Services;
 
 public interface IJobService
 {

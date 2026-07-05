@@ -1,6 +1,5 @@
 ﻿using JobsMarketplace.API.Data;
 using JobsMarketplace.API.Dtos;
-using JobsMarketplace.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 

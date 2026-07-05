@@ -1,4 +1,4 @@
-﻿namespace JobsMarketplace.API.Services.Interfaces;
+﻿namespace JobsMarketplace.API.Services;
 
 public interface ICacheService
 {

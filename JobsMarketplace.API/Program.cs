@@ -1,6 +1,5 @@
 using JobsMarketplace.API.Data;
 using JobsMarketplace.API.Services;
-using JobsMarketplace.API.Services.Interfaces;
 using JobsMarketplace.API.Validators;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
