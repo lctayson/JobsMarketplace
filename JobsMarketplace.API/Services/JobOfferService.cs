@@ -1,25 +1,21 @@
-﻿using JobsMarketplace.API.Data;
-using JobsMarketplace.API.Dtos;
+﻿using JobsMarketplace.API.Dtos;
 using JobsMarketplace.API.Entities;
-using Microsoft.EntityFrameworkCore;
+using JobsMarketplace.API.Repositories;
 
 namespace JobsMarketplace.API.Services;
 
-public class JobOfferService(IAppDbContext context) : IJobOfferService
+public class JobOfferService(IJobOfferRepository repository) : IJobOfferService
 {
     public async Task<JobOfferDto?> GetById(int id)
     {
-        var offer = await context.JobOffers
-            .FirstOrDefaultAsync(o => o.Id == id);
+        var offer = await repository.GetEntityByIdAsync(id);
 
         return offer == null ? null : new JobOfferDto(offer.Id, offer.JobId, offer.ContractorId, offer.Amount, offer.Message, offer.Status);
     }
 
     public async Task<JobOfferDto?> Create(CreateJobOfferDto dto)
     {
-        // Prevent duplicate offers
-        var exists = await context.JobOffers.AnyAsync(o => o.JobId == dto.JobId && o.ContractorId == dto.ContractorId);
-        if (exists) return null;
+        if (await repository.OfferExistsAsync(dto.JobId, dto.ContractorId)) return null;
 
         var offer = new JobOffer
         {
@@ -30,47 +26,49 @@ public class JobOfferService(IAppDbContext context) : IJobOfferService
             Status = "Pending"
         };
 
-        context.JobOffers.Add(offer);
-        await context.SaveChangesAsync();
+        await repository.AddAsync(offer);
+        await repository.SaveChangesAsync();
 
+        // return await repository.GetByIdAsync(offer.Id);
         return new JobOfferDto(offer.Id, offer.JobId, offer.ContractorId, offer.Amount, offer.Message, offer.Status);
     }
 
     public async Task<List<JobOfferDto>> GetByJobId(int jobId)
     {
-        return await context.JobOffers
-            .Where(o => o.JobId == jobId)
-            .Select(o => new JobOfferDto(o.Id, o.JobId, o.ContractorId, o.Amount, o.Message, o.Status))
-            .ToListAsync();
+        return await repository.GetByJobIdAsync(jobId);
     }
 
-    public async Task<bool> Accept(int offerId)
+    public async Task<(bool Success, string ErrorMessage)> Accept(int offerId)
     {
-        // Use a transaction to ensure atomicity
-        using var transaction = await context.Database.BeginTransactionAsync();
+        using var transaction = await repository.BeginTransactionAsync();
 
-        var offer = await context.JobOffers.FindAsync(offerId);
-        if (offer == null) return false;
+        var offer = await repository.GetEntityByIdAsync(offerId);
+        if (offer == null)
+            return (false, "Offer not found.");
 
-        var job = await context.Jobs.FindAsync(offer.JobId);
-        if (job == null) return false;
+        var job = await repository.GetJobByIdAsync(offer.JobId);
+        if (job == null)
+            return (false, "Job not found.");
+
+        if (job.AcceptedById != null)
+            return (false, "Job already taken.");
 
         offer.Status = "Accepted";
         job.AcceptedById = offer.ContractorId;
 
-        await context.SaveChangesAsync();
+        await repository.SaveChangesAsync();
         await transaction.CommitAsync();
 
-        return true;
+        return (true, string.Empty);
     }
 
     public async Task<bool> Delete(int id)
     {
-        var offer = await context.JobOffers.FindAsync(id);
-        if (offer == null || offer.Status == "Accepted") return false; // Cannot delete accepted offers
+        var offer = await repository.GetEntityByIdAsync(id);
+        if (offer == null || offer.Status == "Accepted") return false;  // Cannot delete accepted offers
 
-        context.JobOffers.Remove(offer);
-        await context.SaveChangesAsync();
+        repository.Remove(offer);
+        await repository.SaveChangesAsync();
         return true;
     }
 }

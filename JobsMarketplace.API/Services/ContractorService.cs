@@ -23,7 +23,7 @@ public class ContractorService(IContractorRepository repository, ICacheService c
 
     public async Task<bool> DeleteById(int id)
     {
-        var contractor = await repository.FindByIdAsync(id);
+        var contractor = await repository.GetEntityByIdAsync(id);
         if (contractor == null) return false;
 
         repository.Remove(contractor);

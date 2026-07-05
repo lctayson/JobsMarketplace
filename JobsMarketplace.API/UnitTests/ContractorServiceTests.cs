@@ -66,7 +66,7 @@ public class ContractorServiceTests
         // Arrange
         int id = 1;
         var contractor = new Contractor("Leon The Builder", 4.9);
-        _mockRepo.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(contractor);
+        _mockRepo.Setup(r => r.GetEntityByIdAsync(id)).ReturnsAsync(contractor);
 
         // Act
         var result = await _service.DeleteById(id);
@@ -82,7 +82,7 @@ public class ContractorServiceTests
     public async Task DeleteById_ShouldReturnFalse_WhenContractorNotFound()
     {
         // Arrange
-        _mockRepo.Setup(r => r.FindByIdAsync(It.IsAny<int>())).ReturnsAsync((Contractor?)null);
+        _mockRepo.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>())).ReturnsAsync((Contractor?)null);
 
         // Act
         var result = await _service.DeleteById(99);

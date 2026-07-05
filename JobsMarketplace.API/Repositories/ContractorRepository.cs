@@ -38,7 +38,7 @@ public class ContractorRepository(IAppDbContext context) : IContractorRepository
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<Contractor?> FindByIdAsync(int id) =>
+    public async Task<Contractor?> GetEntityByIdAsync(int id) =>
         await context.Contractors.FindAsync(id);
 
     public void Remove(Contractor contractor) => context.Contractors.Remove(contractor);

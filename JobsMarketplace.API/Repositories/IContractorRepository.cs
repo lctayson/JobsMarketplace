@@ -7,7 +7,7 @@ public interface IContractorRepository
 {
     Task<ContractorDto?> GetByIdAsync(int id);
 
-    Task<Contractor?> FindByIdAsync(int id);
+    Task<Contractor?> GetEntityByIdAsync(int id);
 
     void Remove(Contractor contractor);
 

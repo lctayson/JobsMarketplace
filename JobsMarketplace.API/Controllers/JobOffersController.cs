@@ -18,8 +18,17 @@ public class JobOffersController(IJobOfferService jobOfferService) : ControllerB
     [HttpPost("{id}/accept")]
     public async Task<IActionResult> Accept(int id)
     {
-        var success = await jobOfferService.Accept(id);
-        return success ? NoContent() : NotFound("Offer not found or job already taken.");
+        var (success, errorMessage) = await jobOfferService.Accept(id);
+
+        if (!success)
+        {
+            if (errorMessage == "Offer not found.")
+                return NotFound(errorMessage);
+
+            return BadRequest(errorMessage);    // Return a 400 Bad Request for Job already taken or other errors
+        }
+
+        return NoContent();
     }
 
     [HttpPost]
