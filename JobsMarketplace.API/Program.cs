@@ -35,6 +35,7 @@ builder.Services.AddScoped<IJobOfferService, JobOfferService>();
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IContractorRepository, ContractorRepository>();
 
 // Caching
 builder.Services.AddMemoryCache();

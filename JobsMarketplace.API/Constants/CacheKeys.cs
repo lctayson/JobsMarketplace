@@ -11,4 +11,9 @@ public class CacheKeys
     {
         public static string ById(int id) => $"customer:{id}";
     }
+
+    public static class Contractors
+    {
+        public static string ById(int id) => $"contractor:{id}";
+    }
 }
