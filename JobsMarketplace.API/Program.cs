@@ -4,6 +4,7 @@ using JobsMarketplace.API.Validators;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using JobsMarketplace.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,9 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IContractorService, ContractorService>();
 builder.Services.AddScoped<IJobOfferService, JobOfferService>();
+
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 // Caching
 builder.Services.AddMemoryCache();
