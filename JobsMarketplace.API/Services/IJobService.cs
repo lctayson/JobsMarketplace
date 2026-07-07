@@ -5,7 +5,7 @@ namespace JobsMarketplace.API.Services;
 
 public interface IJobService
 {
-    Task<Job> GetById(int id);
+    Task<Job?> GetById(int id);
 
     Task<JobDto> Create(JobDto dto);
 

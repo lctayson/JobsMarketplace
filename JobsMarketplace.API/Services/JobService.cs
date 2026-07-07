@@ -7,9 +7,9 @@ namespace JobsMarketplace.API.Services
 {
     public class JobService(IJobRepository repository, ICacheService cache) : IJobService
     {
-        public async Task<Job> GetById(int id)
+        public async Task<Job?> GetById(int id)
         {
-            return new Job(id, DateTime.Now, DateTime.Now.AddYears(1), 100, $"Job {id}");
+            return await repository.GetByIdAsync(id);
         }
 
         public async Task<List<JobDto>> GetAvailableJobs(int pageNumber, int pageSize)
