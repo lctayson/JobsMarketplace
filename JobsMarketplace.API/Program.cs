@@ -47,6 +47,8 @@ builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<JobValidator>();
 
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Seed the database
@@ -64,8 +66,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
-    //app.UseSwagger();   
-    //app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
