@@ -48,8 +48,21 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<JobValidator>();
 
 builder.Services.AddSwaggerGen();
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()  // Or specify your frontend URL (e.g., http://localhost:3000)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
+
+// Enable CORS
+app.UseCors("AllowAll");
 
 // Seed the database
 using (var scope = app.Services.CreateScope())
