@@ -12,12 +12,16 @@ namespace JobsMarketplace.API.UnitTests;
 public class JobOfferServiceTests
 {
     private readonly Mock<IJobOfferRepository> _mockRepo;
+    private readonly Mock<IJobRepository> _mockJobRepo;
+    private readonly Mock<IContractorRepository> _mockContractorRepo;
     private readonly JobOfferService _service;
 
     public JobOfferServiceTests()
     {
         _mockRepo = new Mock<IJobOfferRepository>();
-        _service = new JobOfferService(_mockRepo.Object);
+        _mockJobRepo = new Mock<IJobRepository>();
+        _mockContractorRepo = new Mock<IContractorRepository>();
+        _service = new JobOfferService(_mockRepo.Object, _mockJobRepo.Object, _mockContractorRepo.Object);
     }
 
     [Fact]

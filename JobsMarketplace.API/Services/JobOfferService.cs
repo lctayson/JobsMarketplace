@@ -4,7 +4,8 @@ using JobsMarketplace.API.Repositories;
 
 namespace JobsMarketplace.API.Services;
 
-public class JobOfferService(IJobOfferRepository repository) : IJobOfferService
+public class JobOfferService(
+    IJobOfferRepository repository, IJobRepository jobRepository, IContractorRepository contractorRepository) : IJobOfferService
 {
     public async Task<JobOfferDto?> GetById(int id)
     {
@@ -15,7 +16,22 @@ public class JobOfferService(IJobOfferRepository repository) : IJobOfferService
 
     public async Task<JobOfferDto?> Create(CreateJobOfferDto dto)
     {
+        // 1. Check if the offer already exists (your existing logic)
         if (await repository.OfferExistsAsync(dto.JobId, dto.ContractorId)) return null;
+
+        // 2. Validate that the parent Job exists
+        // Assuming you have a method like 'JobExistsAsync' in your repository
+        if (await jobRepository.GetByIdAsync(dto.JobId) == null)
+        {
+            throw new KeyNotFoundException($"Job with ID {dto.JobId} does not exist.");
+        }
+
+        // 3. (Optional) Validate that the Contractor exists
+        // This prevents the same foreign key violation error for the ContractorId
+        if (await contractorRepository.GetEntityByIdAsync(dto.ContractorId) == null)
+        {
+            throw new KeyNotFoundException($"Contractor with ID {dto.ContractorId} does not exist.");
+        }
 
         var offer = new JobOffer
         {
@@ -29,8 +45,14 @@ public class JobOfferService(IJobOfferRepository repository) : IJobOfferService
         await repository.AddAsync(offer);
         await repository.SaveChangesAsync();
 
-        // return await repository.GetByIdAsync(offer.Id);
-        return new JobOfferDto(offer.Id, offer.JobId, offer.ContractorId, offer.Amount, offer.Message, offer.Status);
+        return new JobOfferDto(
+            offer.Id,
+            offer.JobId,
+            offer.ContractorId,
+            offer.Amount,
+            offer.Message,
+            offer.Status
+        );
     }
 
     public async Task<List<JobOfferDto>> GetByJobId(int jobId)
