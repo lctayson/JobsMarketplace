@@ -13,7 +13,7 @@ public class CustomersController(ICustomerService customerService) : ControllerB
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20)
     {
-        return customerService.SearchCustomers(searchTerm, page, pageSize) is { } customers
+        return await customerService.SearchCustomers(searchTerm, page, pageSize) is { } customers
             ? Ok(customers)
             : NotFound();
     }
