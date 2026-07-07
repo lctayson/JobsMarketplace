@@ -35,7 +35,7 @@ I have organized the testing process into a Postman collection.
 Important: Postman Configuration
 To successfully test the endpoints, you must update the baseUrl variable in your Postman environment:
 
-Open your Postman Environment.
+Open your Postman Environment. (You can also use swagger - http://localhost:5249/swagger/index.html)
 
 Set the baseUrl variable to match the port displayed in your terminal or IDE (e.g., http://localhost:5249).
 
